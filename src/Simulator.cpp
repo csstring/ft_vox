@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "shader.h"
 #include <unistd.h>
+#include "Scean.h"
 #include "GLM/ext.hpp"
 void Simulator::colorBlendingTriger(NUMINPUT input)
 {
@@ -58,7 +59,9 @@ void Simulator::moveToCenter(Parser& parser)
 void Simulator::sendDataToGpuBuffer(const Parser& parser)
 {
   _vertexSize = parser._facePos.size();
-  
+  Scean tempScean;
+  tempScean.initialize();
+
   glGenVertexArrays(1, &_VAO);
   glBindVertexArray(_VAO);
 
@@ -93,6 +96,13 @@ void Simulator::sendDataToGpuBuffer(const Parser& parser)
   glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * parser._faceNormal.size(), parser._faceNormal.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+  glGenBuffers(1, &_chunkID);
+  glBindBuffer(GL_ARRAY_BUFFER, _chunkID);
+  glEnableVertexAttribArray(4);	
+  glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);//size 열의 개수
+  glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * tempScean._chunkData._transForm.size(), tempScean._chunkData._transForm.data(), GL_STATIC_DRAW);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+
   glBindVertexArray(0);
 
 }
@@ -109,7 +119,7 @@ void Simulator::blendingRatioUpdate(float delta)
   else if (_blendingRatio <= 0.0f)
     _blendingRatio = 0;
 }
-#include <cstdlib>
+
 void Simulator::initialize(const char* objFilePath)
 {
   std::filesystem::path objPath(objFilePath);
@@ -119,7 +129,6 @@ void Simulator::initialize(const char* objFilePath)
   {
     std::cerr << "can't find obj file " << std::endl;
     std::cout << objFilePath << std::endl;
-    std::cout << getcwd(NULL, 0) << std::endl;
     exit(1);
   }
   if (std::filesystem::exists(TexturePath) == false)
@@ -148,7 +157,7 @@ void Simulator::draw(void)
 {
   glBindTexture(GL_TEXTURE_2D, _textureID);
   glBindVertexArray(_VAO);
-  glDrawArrays(GL_TRIANGLES, 0, _vertexSize);
+  glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(_vertexSize), GL_UNSIGNED_INT, 0, 1);
   glBindVertexArray(0);
 }
 

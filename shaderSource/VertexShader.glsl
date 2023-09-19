@@ -4,6 +4,7 @@ layout(location = 0) in vec4 vertexPosition_modelspace;
 layout(location = 1) in vec3 Incolor;
 layout(location = 2) in vec2 vertexUV;
 layout(location = 3) in vec3 vertexNormal_modelspace;
+layout(location = 4) in mat4 tempTransForm;
 
 uniform mat4 projection;
 uniform mat4 view;
@@ -19,7 +20,7 @@ out vec3 LightDirection_cameraspace;
 
 void main(){
 
-    gl_Position = projection * view * model * vertexPosition_modelspace;
+    gl_Position = projection * view * tempTransForm * vertexPosition_modelspace;
     Position_worldspace = (model * vertexPosition_modelspace).xyz;
 
     vec3 vertexPosition_cameraspace = ( view * model * vertexPosition_modelspace).xyz;

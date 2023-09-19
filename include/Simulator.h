@@ -10,7 +10,7 @@ class Simulator : Noncopyable
         void sendDataToGpuBuffer(const Parser& parser);
         void moveToCenter(Parser& parser);
         void blendingRatioUpdate(float delta);
-        uint32 _VAO, _VBO, _VCO, _textureID, _uvID, _normalID;
+        uint32 _VAO, _VBO, _VCO, _textureID, _uvID, _normalID, _chunkID;
         uint32 _vertexSize;
         glm::vec3 _curColor;
         float      _blendingRatio = 0;
