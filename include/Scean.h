@@ -1,13 +1,23 @@
 #pragma once
 #include "Common.h"
 #include "VoxelChunkData.h"
-
-class Scean
+#include <map>
+#include <utility>
+class Scean : Noncopyable
 {
   private:
+    std::vector<glm::vec4> _objectPos;
+    std::vector<glm::vec2> _objectUV;
+
   public:
-    VoxelChunkData _chunkData;
-    Scean(){};
+    std::map<std::string,VoxelChunkData> _chunkDatas; //string : "x y z"
+    Scean() = delete;
+    Scean(std::vector<glm::vec4>& pos, std::vector<glm::vec2>& uv);
     ~Scean(){};
+
+    uint32 getVectexSize(){return _objectPos.size();};
     void initialize();
+    void addChunkData();
+    // void eraseChunkData();
+    void initializeChunkData(VoxelChunkData& chunkData);
 };

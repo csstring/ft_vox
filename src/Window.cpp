@@ -52,38 +52,6 @@ void Window::processInput(Simulator& simulator, Camera& camera)
     if (glfwGetKey(_window, GLFW_KEY_D ) == GLFW_PRESS)
         camera._cameraPos += camera._cameraRight * cameraSpeed;
     
-    if (currentBlendingState == GLFW_PRESS && previousBlendingState == GLFW_RELEASE)
-    {
-        previousBlendingState = currentBlendingState;
-    } else if (currentBlendingState == GLFW_RELEASE && previousBlendingState == GLFW_PRESS) {
-        previousBlendingState = currentBlendingState;
-        simulator.colorBlendingTriger(NUMINPUT::NUM1);
-    }
-
-    if (glfwGetKey(_window, GLFW_KEY_U ) == GLFW_PRESS)
-    {
-        simulator.moveObjectThreeAxis(glm::vec3(0,0,-0.1));
-    }
-    if (glfwGetKey(_window, GLFW_KEY_J ) == GLFW_PRESS)
-    {
-        simulator.moveObjectThreeAxis(glm::vec3(0,0,0.1));
-    }
-    if (glfwGetKey(_window, GLFW_KEY_H ) == GLFW_PRESS)
-    {
-        simulator.moveObjectThreeAxis(glm::vec3(-0.1,0,0));
-    }
-    if (glfwGetKey(_window, GLFW_KEY_K ) == GLFW_PRESS)
-    {
-        simulator.moveObjectThreeAxis(glm::vec3(0.1,0,0.0));
-    }
-    if (glfwGetKey(_window, GLFW_KEY_Y ) == GLFW_PRESS)
-    {
-        simulator.moveObjectThreeAxis(glm::vec3(0,0.1,0.00));
-    }
-    if (glfwGetKey(_window, GLFW_KEY_I ) == GLFW_PRESS)
-    {
-        simulator.moveObjectThreeAxis(glm::vec3(0,-0.1,0));
-    }
 }
 
 void Window::clearColorSetUp(float r, float g, float b, float a)

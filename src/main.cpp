@@ -79,12 +79,12 @@ int main(int ac, char** av)
         radias += 0.01;
         shader.use();
         window.processInput(simulator, _camera);
-        glm::mat4 projection = glm::perspective(glm::radians(_camera._zoom), (float)WINDOW_WITH / (float)WINDOW_HEIGHT, 0.1f, 500.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(_camera._zoom), (float)WINDOW_WITH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
         glm::mat4 rotation = glm::rotate(radias, glm::vec3(0,1,0));
         _camera.update();
         shader.setMat4("projection", projection);
         shader.setMat4("view", _camera._view);
-        shader.setMat4("model", simulator._worldTranslate * rotation);
+        // shader.setMat4("model", simulator._worldTranslate * rotation);
         shader.setVec3("LightPosition_worldspace", glm::vec3(4,4,4));
         curTime = getCurTimePoint();
         simulator.update(getMilisecondTime(curTime, beforeTime) / float(2000), shader);

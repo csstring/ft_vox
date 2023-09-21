@@ -17,7 +17,8 @@ typedef unsigned char       uint8;
 typedef unsigned short      uint16;
 typedef unsigned int        uint32;
 typedef unsigned long       uint64;        
-
+const uint32 MapLength = 16000;
+const uint32 MapHight = 256;
 const float OVERLAPTIME = 200;
 class Noncopyable
 {
