@@ -3,12 +3,13 @@
 #include "VoxelChunkData.h"
 #include <map>
 #include <utility>
+class Camera;
 class Scean : Noncopyable
 {
   private:
     std::vector<glm::vec4> _objectPos;
     std::vector<glm::vec2> _objectUV;
-
+    
   public:
     std::map<std::string,VoxelChunkData> _chunkDatas; //string : "x y z"
     Scean() = delete;
@@ -20,4 +21,5 @@ class Scean : Noncopyable
     void addChunkData();
     // void eraseChunkData();
     void initializeChunkData(VoxelChunkData& chunkData);
+    void update(const Camera& camera);
 };

@@ -12,11 +12,11 @@ void Camera::initialize(void)
 
 void Camera::ProcessMouseScroll(float yoffset)
 {
-    _zoom -= (float)yoffset;
-    if (_zoom < 1.0f)
-        _zoom = 1.0f;
-    if (_zoom > 45.0f)
-        _zoom = 45.0f;
+    _fov -= (float)yoffset;
+    if (_fov < 1.0f)
+        _fov = 1.0f;
+    if (_fov > 80.0f)
+        _fov = 80.0f;
 }
 
 void Camera::updateCameraVectors()
@@ -27,7 +27,7 @@ void Camera::updateCameraVectors()
     front.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
     _cameraFront = glm::normalize(front);
 
-    _cameraRight = glm::normalize(glm::cross(_cameraFront, _cameraUp));  
+    _cameraRight = glm::normalize(glm::cross(_cameraFront, _worldUp));  
     _cameraUp    = glm::normalize(glm::cross(_cameraRight, _cameraFront));
 }
 

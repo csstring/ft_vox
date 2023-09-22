@@ -10,6 +10,7 @@
 #include "GLM/ext.hpp"
 #include "GLM/gtx/string_cast.hpp"
 #include "Scean.h"
+#include "Camera.h"
 
 Simulator::~Simulator()
 {
@@ -52,15 +53,25 @@ void Simulator::initialize(const char* objFilePath)
 
 void Simulator::draw(void)
 {
+  uint32 totalData = 0;
+  uint32 curData = 0;
   glBindTexture(GL_TEXTURE_2D, _textureID);
   for (const auto& it : _scean->_chunkDatas)
   {
     glBindVertexArray(it.second._VAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, _scean->getVectexSize(), it.second.amount);
+    glBindBuffer(GL_ARRAY_BUFFER, it.second.chunkID);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * it.second.buffer.size(), it.second.buffer.data(), GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    totalData += it.second._transForm.size();
+    curData += it.second.buffer.size();
+    glDrawArraysInstanced(GL_TRIANGLES, 0, _scean->getVectexSize(), it.second.buffer.size());
     glBindVertexArray(0);
   }
+  std::cout << "total : " << totalData << "\n";
+  std::cout << "cur : " << curData << "\n";
 }
 
-void Simulator::update(float delta, const Shader& shader)
+void Simulator::update(float delta, const Shader& shader,const Camera& camera)
 {
+  _scean->update(camera);
 }

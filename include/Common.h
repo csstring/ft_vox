@@ -8,6 +8,7 @@
 #include <cmath>
 #include <filesystem>
 #include "GLM/glm.hpp"
+#include "GLM/gtx/string_cast.hpp"
 #define GL_SILENCE_DEPRECATION
 typedef signed char         int8;
 typedef signed short        int16;
@@ -16,7 +17,11 @@ typedef signed long         int64;
 typedef unsigned char       uint8;
 typedef unsigned short      uint16;
 typedef unsigned int        uint32;
-typedef unsigned long       uint64;        
+typedef unsigned long       uint64;
+
+const float WINDOW_WITH = 1440;
+const float WINDOW_HEIGHT = 960;
+
 const uint32 MapLength = 16000;
 const uint32 MapHight = 256;
 const float OVERLAPTIME = 200;

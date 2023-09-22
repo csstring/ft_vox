@@ -44,13 +44,25 @@ void Window::processInput(Simulator& simulator, Camera& camera)
         glfwSetWindowShouldClose(_window, true);
 
     if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
+    {
         camera._cameraPos += cameraSpeed * camera._cameraFront;
+        std::cout << glm::to_string(camera._cameraPos) << std::endl;
+    }
     if (glfwGetKey(_window, GLFW_KEY_S ) == GLFW_PRESS)
+    {
         camera._cameraPos -= cameraSpeed * camera._cameraFront;
+        std::cout << glm::to_string(camera._cameraPos) << std::endl;
+    }
     if (glfwGetKey(_window, GLFW_KEY_A ) == GLFW_PRESS)
+    {
         camera._cameraPos -= camera._cameraRight * cameraSpeed;
+        std::cout << glm::to_string(camera._cameraPos) << std::endl;
+    }
     if (glfwGetKey(_window, GLFW_KEY_D ) == GLFW_PRESS)
+    {
         camera._cameraPos += camera._cameraRight * cameraSpeed;
+        std::cout << glm::to_string(camera._cameraPos) << std::endl;
+    }
     
 }
 

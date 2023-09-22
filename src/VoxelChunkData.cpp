@@ -1,5 +1,8 @@
 #include "VoxelChunkData.h"
 #include "GL/glew.h"
+#include "AABB.h"
+#include "Camera.h"
+#include "Frustum.h"
 
 void VoxelChunkData::initialize()
 {
@@ -36,7 +39,6 @@ void VoxelChunkData::initialize()
   glVertexAttribDivisor(5, 1);
   glVertexAttribDivisor(6, 1);
   glVertexAttribDivisor(7, 1);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * _transForm.size(), _transForm.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 }
@@ -47,4 +49,23 @@ VoxelChunkData::~VoxelChunkData()
   glDeleteBuffers(1, &uvID);
   glDeleteBuffers(1, &posID);
   glDeleteBuffers(1, &chunkID);
+}
+
+void VoxelChunkData::updata(const Camera& camera)
+{
+  buffer.clear();
+  Frustum frustum(camera, WINDOW_WITH / WINDOW_HEIGHT);
+  for (const glm::mat4& transForm : _transForm)
+  {
+    // glm::vec3 min = glm::vec4(-0.5f,-0.5f,-0.5f,1) * transForm;
+    // glm::vec3 max = glm::vec4(0.5f,0.5f,0.5f,1) * transForm;
+    glm::vec3 min(-0.5f);
+    glm::vec3 max(0.5f);
+    AABB aabb(min, max);
+    
+    if (aabb.isOnFrustum(frustum, transForm))
+    {
+      buffer.push_back(transForm);
+    }
+  }
 }

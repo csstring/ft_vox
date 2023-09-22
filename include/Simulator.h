@@ -5,12 +5,13 @@
 class Parser;
 class Shader;
 class Scean;
+class Camera;
 class Simulator : Noncopyable
 {
     private:
         uint32 _textureID;
         uint32 _vertexSize;
-
+        
     private:
         Scean* _scean = nullptr;
 
@@ -21,7 +22,7 @@ class Simulator : Noncopyable
         ~Simulator();
         
         void initialize(const char* objFilePath);
-        void update(float delta, const Shader& shader);
+        void update(float delta, const Shader& shader,const Camera& camera);
         void draw(void);
 };
 
