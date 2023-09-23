@@ -93,4 +93,5 @@ int main(int ac, char** av)
         window.bufferSwap();
         glfwPollEvents();
     }
+    glfwTerminate();
 }

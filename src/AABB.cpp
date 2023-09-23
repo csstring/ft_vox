@@ -25,6 +25,7 @@ bool AABB::isOnFrustum(const Frustum& frustumCam, const glm::mat4& transform) co
 
     //We not need to divise scale because it's based on the half extention of the AABB
     const AABB globalAABB(globalCenter, newIi, newIj, newIk);
+    
   return globalAABB.isOnOrForwardPlane(frustumCam._bottomFace) &&
     globalAABB.isOnOrForwardPlane(frustumCam._farFace) &&
     globalAABB.isOnOrForwardPlane(frustumCam._leftFace) &&
@@ -36,8 +37,7 @@ bool AABB::isOnFrustum(const Frustum& frustumCam, const glm::mat4& transform) co
 
 bool AABB::isOnOrForwardPlane(const Plane& plane) const
 {
-  const float r = _extents.x * std::abs(plane._normal.x) +
-    _extents.y * std::abs(plane._normal.y) + _extents.z * std::abs(plane._normal.z);
-  
-  return -r <= plane.getDistanceToPlane(_center);
+  const float r = _extents.x * (plane._normal.x) +
+    _extents.y * (plane._normal.y) + _extents.z * (plane._normal.z);
+  return plane.getDistanceToPlane(_center) + r >= 0;
 }

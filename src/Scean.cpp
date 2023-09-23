@@ -31,6 +31,7 @@ void Scean::initialize()
       it.initialize();
     }
   }
+  _texture.initialize();
 }
 
 void Scean::update(const Camera& camera)
