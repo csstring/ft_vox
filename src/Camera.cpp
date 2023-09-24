@@ -7,7 +7,7 @@ void Camera::update(void)
 
 void Camera::initialize(void)
 {
-    _cameraPos = glm::vec3(0,0,0);
+    _cameraPos = glm::vec3(MapLength/2, 60 ,MapLength/2 +1500);
     _cameraUp = glm::vec3(0,1,0);
     _cameraFront = glm::vec3(0,0,-1);
     _worldUp = _cameraUp;

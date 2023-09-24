@@ -22,7 +22,7 @@ typedef unsigned long       uint64;
 const float WINDOW_WITH = 1440;
 const float WINDOW_HEIGHT = 960;
 
-const uint32 MapLength = 16000;
+const uint32 MapLength = 16384;
 const uint32 MapHight = 256;
 const float OVERLAPTIME = 200;
 class Noncopyable

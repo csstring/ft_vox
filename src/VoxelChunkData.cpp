@@ -16,11 +16,25 @@ void VoxelChunkData::initialize()
   glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * _pos.size(), _pos.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+  glGenBuffers(1, &boxID);
+  glBindBuffer(GL_ARRAY_BUFFER, boxID);
+  glEnableVertexAttribArray(1);	
+  glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);//size 열의 개수
+  glVertexAttribDivisor(1, 1);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+
   glGenBuffers(1, &uvID);
   glBindBuffer(GL_ARRAY_BUFFER, uvID);
   glEnableVertexAttribArray(2);	
   glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);//size 열의 개수
   glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * _uv.size(), _uv.data(), GL_STATIC_DRAW);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+  glGenBuffers(1, &normalID);
+  glBindBuffer(GL_ARRAY_BUFFER, normalID);
+  glEnableVertexAttribArray(3);	
+  glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);//size 열의 개수
+  glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * _normal.size(), _normal.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   glGenBuffers(1, &chunkID);
@@ -49,13 +63,17 @@ VoxelChunkData::~VoxelChunkData()
   glDeleteBuffers(1, &uvID);
   glDeleteBuffers(1, &posID);
   glDeleteBuffers(1, &chunkID);
+  glDeleteBuffers(1, &normalID);
+  glDeleteBuffers(1, &boxID);
 }
 
 void VoxelChunkData::updata(const Camera& camera)
 {
   buffer.clear();
+  _textureIDBuffer.clear();
+
   Frustum frustum(camera, WINDOW_WITH / WINDOW_HEIGHT);
-  for (const glm::mat4& transForm : _transForm)
+  for (int i = 0; i < _transForm.size(); ++i)
   {
     // glm::vec3 min = glm::vec4(-0.5f,-0.5f,-0.5f,1) * transForm;
     // glm::vec3 max = glm::vec4(0.5f,0.5f,0.5f,1) * transForm;
@@ -63,9 +81,11 @@ void VoxelChunkData::updata(const Camera& camera)
     glm::vec3 max(0.5f);
     AABB aabb(min, max);
     
-    if (aabb.isOnFrustum(frustum, transForm))
+      // std::cout << "frustum" << std::endl;
+    if (aabb.isOnFrustum(frustum, _transForm[i]))
     {
-      buffer.push_back(transForm);
+      _textureIDBuffer.push_back(_texture[i]);
+      buffer.push_back(_transForm[i]);
     }
   }
 }

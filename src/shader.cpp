@@ -136,3 +136,18 @@ void Shader::setFloat(const std::string &name, float index) const
 {
     glUniform1f(glGetUniformLocation(_programId, name.c_str()), index);
 }
+
+void Shader::textureUpdate()
+{
+	GLint dirtLocation = glGetUniformLocation(_programId, "dirt");
+	GLint grassSideLocation = glGetUniformLocation(_programId, "grass_side");
+	GLint grassTopLocation = glGetUniformLocation(_programId, "grass_top");
+	GLint snowBlockLocation = glGetUniformLocation(_programId, "SNOW_SNOW_BLOCK");
+	GLint snowStoneLocation = glGetUniformLocation(_programId, "SNOW_STONE");
+
+	glUniform1i(dirtLocation, 0); // Bind to texture unit 0
+	glUniform1i(grassSideLocation, 1); // Bind to texture unit 1
+	glUniform1i(grassTopLocation, 2); // Bind to texture unit 2
+	glUniform1i(snowBlockLocation, 3); // Bind to texture unit 3
+	glUniform1i(snowStoneLocation, 4); // Bind to texture unit 4
+}

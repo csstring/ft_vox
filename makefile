@@ -1,7 +1,7 @@
 CXX = c++ 
 # 컴파일 플래그
 #CXXFLAGS = -Wall -Wextra -Werror -std=c++17
-CXXFLAGS = -std=c++17
+CXXFLAGS = -std=c++17 -O3
 # 링크 플래그
 LDFLAGS = 
 # 소스코드 파일 경로

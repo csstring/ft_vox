@@ -88,6 +88,7 @@ int main(int ac, char** av)
         shader.setVec3("LightPosition_worldspace", glm::vec3(4,4,4));
         curTime = getCurTimePoint();
         simulator.update(getMilisecondTime(curTime, beforeTime) / float(2000), shader, _camera);
+        shader.textureUpdate();
         simulator.draw();
         beforeTime = curTime;
         window.bufferSwap();
