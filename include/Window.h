@@ -11,7 +11,7 @@ class Window : Noncopyable
                    ~Window(void){}
                    
         void        initialize(void);
-        void        processInput(Simulator& simulator, Camera& camera);
+        void        processInput(float delta, Camera& camera);
         void        clearColorSetUp(float r = 0, float g = 0, float b = 0, float a = 0);
         bool        isWindowClose(void);
         void        bufferSwap(void);

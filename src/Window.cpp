@@ -30,38 +30,37 @@ void Window::initialize(void)
     clearColorSetUp();
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PROGRAM_POINT_SIZE);
-
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW); 
     glDepthFunc(GL_LESS);
     glfwSwapInterval(1);
 
 }
 
-void Window::processInput(Simulator& simulator, Camera& camera)
+void Window::processInput(float delta, Camera& camera)
 {
-    static int currentBlendingState,previousBlendingState;
-    currentBlendingState = glfwGetKey(_window, GLFW_KEY_1);
-
     if(glfwGetKey(_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(_window, true);
 
     if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
     {
-        camera._cameraPos += cameraSpeed * camera._cameraFront;
+        camera._cameraPos += delta * camera._cameraFront;
         // std::cout << glm::to_string(camera._cameraPos) << std::endl;
     }
-    if (glfwGetKey(_window, GLFW_KEY_S ) == GLFW_PRESS)
+    else if (glfwGetKey(_window, GLFW_KEY_S ) == GLFW_PRESS)
     {
-        camera._cameraPos -= cameraSpeed * camera._cameraFront;
+        camera._cameraPos -= delta * camera._cameraFront;
         // std::cout << glm::to_string(camera._cameraPos) << std::endl;
     }
-    if (glfwGetKey(_window, GLFW_KEY_A ) == GLFW_PRESS)
+    else if (glfwGetKey(_window, GLFW_KEY_A ) == GLFW_PRESS)
     {
-        camera._cameraPos -= camera._cameraRight * cameraSpeed;
+        camera._cameraPos -= camera._cameraRight * delta;
         // std::cout << glm::to_string(camera._cameraPos) << std::endl;
     }
-    if (glfwGetKey(_window, GLFW_KEY_D ) == GLFW_PRESS)
+    else if (glfwGetKey(_window, GLFW_KEY_D ) == GLFW_PRESS)
     {
-        camera._cameraPos += camera._cameraRight * cameraSpeed;
+        camera._cameraPos += camera._cameraRight * delta;
         // std::cout << glm::to_string(camera._cameraPos) << std::endl;
     }
     

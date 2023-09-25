@@ -81,18 +81,19 @@ int main(int ac, char** av)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         mygui.update();
         shader.use();
-        window.processInput(simulator, _camera);
+        double delta = getMilisecondTime(curTime, beforeTime) * 0.05;
+        window.processInput(delta , _camera);
+        _camera.update();
         glm::mat4 projection = glm::perspective(glm::radians(_camera._fov), (float)WINDOW_WITH / (float)WINDOW_HEIGHT, _camera._zNear, _camera._zFar);
  
-        _camera.update();
         shader.setMat4("projection", projection);
         shader.setMat4("view", _camera._view);
         shader.setVec3("LightPosition_worldspace", glm::vec3(4,4,4));
-        curTime = getCurTimePoint();
-        simulator.update(getMilisecondTime(curTime, beforeTime) / float(2000), shader, _camera);
+        simulator.update(delta, shader, _camera);
         shader.textureUpdate();
         simulator.draw();
         beforeTime = curTime;
+        curTime = getCurTimePoint();
         mygui.render();
         window.bufferSwap();
         glfwPollEvents();

@@ -73,22 +73,20 @@ void ChunkManager::generateChunk(glm::vec3 startPos)
 
   glm::vec3 endPos(startPos.x + 16, 0, startPos.z + 16);
   VoxelChunkData* it = _attachBuffer.back().second;
-
-  it->_transForm.reserve(amount);
-  it->_texture.reserve(amount);
+  it->_startPos = glm::vec3(startPos.x, 0, startPos.z);
   for (float x = startPos.x; x < endPos.x; ++x)
   {
     for (float z = startPos.z; z < endPos.z; ++z)
     {
-      double maxh = _perlinNoise.generateOctavePerlin(x/64.0f, z/64.0f, 0,3,2) * 256.f;
+      int maxh = _perlinNoise.generateOctavePerlin(x/64.0f, z/64.0f, 0,3,2) * 256.f;
       // double maxh = _perlinNoise.generatePerlin(x/64.0f, z/64.0f, 0);
-      for (float y = 0 ; y < maxh-1; ++y)
+      for (int y = 0 ; y < maxh-1; ++y)
       {
-        it->_transForm.push_back(glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z)));
-        it->_texture.push_back(BoxTexture::DIRT);
+        it->_transForm[y].push_back(glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z)));
+        it->_texture[y].push_back(BoxTexture::DIRT);
       }
-      it->_transForm.push_back(glm::translate(glm::mat4(1.0f), glm::vec3(x, maxh, z)));
-      it->_texture.push_back(BoxTexture::GRASS_SIDE);
+      it->_transForm[maxh-1].push_back(glm::translate(glm::mat4(1.0f), glm::vec3(x, maxh, z)));
+      it->_texture[maxh-1].push_back(BoxTexture::GRASS_SIDE);
     }
   }
 }
@@ -149,7 +147,9 @@ void ChunkManager::update(const Camera& camera)
     _drawTextureID.clear();
 
     for (auto& it : _chunkDatas)
+    {
       it.second->updata(camera, _drawTextureID,_drawTransFromBuffer);
+    }
     glBindVertexArray(_VAO);
     glBindBuffer(GL_ARRAY_BUFFER, chunkID);
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * _drawTransFromBuffer.size(), _drawTransFromBuffer.data(), GL_DYNAMIC_DRAW);
