@@ -7,9 +7,7 @@ enum class NUMINPUT
   NUM2,
   NUM3,
 };
-/*"./minecraft_asset/001-dirt.png",
-    "./minecraft_asset/002-grass_side.png",
-    "./minecraft_asset/003-grass_top.png",*/
+
 enum BoxTexture {
   DIRT,
   GRASS_SIDE,

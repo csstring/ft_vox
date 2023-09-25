@@ -48,8 +48,6 @@ void Simulator::initialize(const char* objFilePath)
     exit(1);
   }
   _scean = new Scean(parser._facePos, parser._faceUV, parser._faceNormal);
-  for (auto it : parser._faceNormal)
-    std::cout << glm::to_string(it) << std::endl;
   _scean->initialize();
   this->_vertexSize = parser._facePos.size();
 }
@@ -58,19 +56,7 @@ void Simulator::draw(void)
 {
   uint32 totalData = 0;
   uint32 curData = 0;
-  for (const auto& it : _scean->_chunkDatas)
-  {
-    glBindVertexArray(it.second->_VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, it.second->chunkID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * it.second->buffer.size(), it.second->buffer.data(), GL_STREAM_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, it.second->boxID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * it.second->_textureIDBuffer.size(), it.second->_textureIDBuffer.data(), GL_STREAM_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, _vertexSize, it.second->buffer.size());
-    glBindVertexArray(0);
-  }
-
+  _scean->draw();
 }
 
 void Simulator::update(float delta, const Shader& shader,const Camera& camera)

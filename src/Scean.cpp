@@ -8,14 +8,16 @@
 void Scean::initialize()
 {
   _texture.initialize();
+  _ChunkManager.initialize();
 }
 
 void Scean::update(const Camera& camera)
 {
-  _ChunkManager.update(camera._cameraPos);
-  for (auto it : _chunkDatas)
-  {
-    it.second->updata(camera);
-  }
+  _ChunkManager.update(camera);
   _texture.activeTexture();
+}
+
+void Scean::draw()
+{
+  _ChunkManager.draw();
 }

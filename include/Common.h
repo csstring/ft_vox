@@ -9,6 +9,10 @@
 #include <filesystem>
 #include "GLM/glm.hpp"
 #include "GLM/gtx/string_cast.hpp"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #define GL_SILENCE_DEPRECATION
 typedef signed char         int8;
 typedef signed short        int16;

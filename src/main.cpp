@@ -10,7 +10,10 @@
 #include <unistd.h>
 #include "GLM/gtc/matrix_transform.hpp"
 #include "GLM/gtx/transform.hpp"
+#include "Mygui.h"
+
 Camera      _camera;
+Mygui       mygui;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -61,6 +64,7 @@ int main(int ac, char** av)
     window.initialize();
     _camera.initialize();
     shader.initialize();
+    mygui.initialize(window._window);
 
     Simulator simulator;
     simulator.initialize(av[1]);
@@ -70,27 +74,26 @@ int main(int ac, char** av)
     glfwSetScrollCallback(window._window, scroll_callback);
     glfwSetInputMode(window._window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    float radias = 0;
     std::chrono::steady_clock::time_point curTime = getCurTimePoint();
     std::chrono::steady_clock::time_point beforeTime = getCurTimePoint();
     while (window.isWindowClose() == false)
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        radias += 0.01;
+        mygui.update();
         shader.use();
         window.processInput(simulator, _camera);
         glm::mat4 projection = glm::perspective(glm::radians(_camera._fov), (float)WINDOW_WITH / (float)WINDOW_HEIGHT, _camera._zNear, _camera._zFar);
-        glm::mat4 rotation = glm::rotate(radias, glm::vec3(0,1,0));
+ 
         _camera.update();
         shader.setMat4("projection", projection);
         shader.setMat4("view", _camera._view);
-        // shader.setMat4("model", simulator._worldTranslate * rotation);
         shader.setVec3("LightPosition_worldspace", glm::vec3(4,4,4));
         curTime = getCurTimePoint();
         simulator.update(getMilisecondTime(curTime, beforeTime) / float(2000), shader, _camera);
         shader.textureUpdate();
         simulator.draw();
         beforeTime = curTime;
+        mygui.render();
         window.bufferSwap();
         glfwPollEvents();
     }
