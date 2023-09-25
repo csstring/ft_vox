@@ -20,7 +20,7 @@ class ChunkManager : Noncopyable
     std::vector<glm::vec3> _attachChunkPos;
     std::vector<std::string> _detachName;
 
-    std::vector<glm::mat4> _drawTransFromBuffer;
+    std::vector<glm::vec4> _drawTransFromBuffer;
     std::vector<float>     _drawTextureID;
   private:  
     void generateChunk(glm::vec3 startPos);

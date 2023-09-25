@@ -59,7 +59,7 @@ int main(int ac, char** av)
     }
 
     Window window;
-    Shader shader("./shaderSource/VertexShader.glsl","./shaderSource/FragmentShader.glsl");
+    Shader shader("./shaderSource/VertexShader.glsl","./shaderSource/FragmentShader.glsl","./shaderSource/GeometryShader.glsl");
     
     window.initialize();
     _camera.initialize();

@@ -21,7 +21,7 @@ void ChunkManager::initialize()
   glBindBuffer(GL_ARRAY_BUFFER, posID);
   glEnableVertexAttribArray(0);	
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);//size 열의 개수
-  glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * _objectPos.size(), _objectPos.data(), GL_STATIC_DRAW);
+  // glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * _objectPos.size(), _objectPos.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   glGenBuffers(1, &boxID);
@@ -145,28 +145,28 @@ void ChunkManager::update(const Camera& camera)
       detachChunk();
   }
 
-    _drawTransFromBuffer.clear();
-    _drawTextureID.clear();
 
+      glBindVertexArray(_VAO);
+      glBindBuffer(GL_ARRAY_BUFFER, posID);
     for (auto& it : _chunkDatas)
+    {
+      _drawTransFromBuffer.clear();
+      _drawTextureID.clear();
       it.second->updata(camera, _drawTextureID,_drawTransFromBuffer);
-    glBindVertexArray(_VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, chunkID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * _drawTransFromBuffer.size(), _drawTransFromBuffer.data(), GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, boxID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _drawTextureID.size(), _drawTextureID.data(), GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
-    
+      glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * _drawTransFromBuffer.size(), _drawTransFromBuffer.data(), GL_STREAM_DRAW);
+      glDrawArrays(GL_POINTS, 0, _drawTransFromBuffer.size());
+    }
+      glBindBuffer(GL_ARRAY_BUFFER, 0);
+      glBindVertexArray(0);
 }
 
 void ChunkManager::draw()
 {
-  glBindVertexArray(_VAO);
-  glDrawArraysInstanced(GL_TRIANGLES, 0, _objectPos.size(), _drawTransFromBuffer.size());
-  glBindVertexArray(0);
+  // glBindVertexArray(_VAO);
+
+  // glDrawArrays(GL_POINTS, 0, _drawTransFromBuffer.size());
+
+  // glBindVertexArray(0);
   // std::cout << _drawTransFromBuffer.size() << std::endl;
 }
 

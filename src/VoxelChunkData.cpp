@@ -4,7 +4,7 @@
 #include "Camera.h"
 #include "Frustum.h"
 
-void VoxelChunkData::updata(const Camera& camera, std::vector<float>& textureBuffer, std::vector<glm::mat4>& transFormBuffer)
+void VoxelChunkData::updata(const Camera& camera, std::vector<float>& textureBuffer, std::vector<glm::vec4>& transFormBuffer)
 {
   Frustum frustum(camera, WINDOW_WITH / WINDOW_HEIGHT);
   for (int i = 0; i < _transForm.size(); ++i)
@@ -16,8 +16,8 @@ void VoxelChunkData::updata(const Camera& camera, std::vector<float>& textureBuf
       // std::cout << "frustum" << std::endl;
     if (aabb.isOnFrustum(frustum, _transForm[i]))
     {
-      textureBuffer.push_back(_texture[i]);
-      transFormBuffer.push_back(_transForm[i]);
+      // textureBuffer.push_back(_texture[i]);
+      transFormBuffer.push_back(_transForm[i]*glm::vec4(0,0,0,1));
     }
   }
 }

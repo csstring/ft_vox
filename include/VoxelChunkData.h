@@ -9,6 +9,6 @@ class VoxelChunkData
     std::vector<BoxTexture> _texture;
 
   public:
-    void updata(const Camera& camera, std::vector<float>& textureBuffer, std::vector<glm::mat4>& transFormBuffer);
+    void updata(const Camera& camera, std::vector<float>& textureBuffer, std::vector<glm::vec4>& transFormBuffer);
     ~VoxelChunkData(){};
 };

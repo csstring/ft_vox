@@ -5,7 +5,7 @@
 class Shader : Noncopyable
 {   
     public :
-        explicit    Shader(const char* vertexRelativePath,const char* fragmentRelativePath);
+        explicit    Shader(const char* vertexRelativePath,const char* fragmentRelativePath, const char* geometryRelativePath);
         void        initialize(void);
         void        use(void);
         void        setMat4(const std::string &name, glm::mat4 mat4) const;
@@ -19,4 +19,5 @@ class Shader : Noncopyable
     private:
         std::string _vertexFullPath;
         std::string _fragmentFullPath;
+        std::string _geometryFullPath;
 };
