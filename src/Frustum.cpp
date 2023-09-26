@@ -5,6 +5,8 @@ Frustum::Frustum(const Camera& camera, float aspect)
 {
   const float halfVSide = camera._zFar * tanf(glm::radians(camera._fov + 10) * 0.5f);
   const float halfHSide = halfVSide * aspect;
+  // std::cout << "v : " << halfVSide * 2 << std::endl;
+  // std::cout << "h : " << halfHSide * 2 << std::endl;
   const glm::vec3 frontMultFar = camera._zFar * camera._cameraFront;
 
   _nearFace = Plane(camera._cameraPos + camera._zNear * camera._cameraFront, camera._cameraFront);

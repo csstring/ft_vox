@@ -26,8 +26,8 @@ class Camera
         bool _isFirst;
         float _lastX;
         float _lastY;
-        const float _zNear = 0.1;
-        const float _zFar = 100;
+        float _zNear = 0.1;
+        float _zFar = 100;
         glm::vec3   _worldUp;
         glm::vec3   _cameraUp;
         glm::vec3   _cameraPos;

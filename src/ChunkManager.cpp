@@ -95,10 +95,10 @@ void ChunkManager::surroundCheck()
 {
   int32 curx = _camPos.x - (static_cast<int32>(_camPos.x) % 16);
   int32 curz = _camPos.z - (static_cast<int32>(_camPos.z) % 16);
-  int32 minx = std::clamp(curx - 4 * 16, 0, 16384);
-  int32 maxx = std::clamp(curx + 4 * 16, 0, 16384);
-  int32 minz = std::clamp(curz - 4 * 16, 0, 16384);
-  int32 maxz = std::clamp(curz + 4 * 16, 0, 16384);
+  int32 minx = std::clamp(curx - 8 * 16, 0, 16384);
+  int32 maxx = std::clamp(curx + 8 * 16, 0, 16384);
+  int32 minz = std::clamp(curz - 8 * 16, 0, 16384);
+  int32 maxz = std::clamp(curz + 8 * 16, 0, 16384);
   for (int x = minx; x < maxx; x += 16)
   {
     for (int z = minz; z < maxz; z += 16)
