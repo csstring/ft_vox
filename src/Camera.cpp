@@ -11,7 +11,7 @@ void Camera::initialize(void)
     _cameraUp = glm::vec3(0,1,0);
     _cameraFront = glm::vec3(0,0,-1);
     _worldUp = _cameraUp;
-    _zFar = 160;
+    _zFar = 60;
     updateCameraVectors();
 }
 
